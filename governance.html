@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Neural Chain - Governance</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Inter:wght@100..900&amp;family=Space+Grotesk:wght@300..700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="js/tailwind-config.js"></script>
+<link rel="stylesheet" href="css/governance.css"/>
+<link rel="stylesheet" href="css/cursor.css"/>
+</head>
+<body class="bg-surface text-on-surface antialiased min-h-screen flex flex-col relative overflow-x-hidden" style="opacity:0;">
+<script>setTimeout(function(){document.body.style.opacity="1";},1500);</script>
+<div class="cursor-dot" id="cursor-dot"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<!-- Background Grid -->
+<div class="fixed inset-0 z-0 bg-grid-pattern pointer-events-none"></div>
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-surface/10 dark:bg-surface/10 backdrop-blur-xl border-b border-outline-variant/20 shadow-[0_0_20px_rgba(0,219,233,0.15)]">
+<div class="flex justify-between items-center max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop h-20">
+<!-- Brand -->
+<div class="flex items-center gap-2">
+<span class="font-display-lg-mobile text-2xl md:text-3xl font-bold tracking-widest text-surface-tint">NEURAL CHAIN</span>
+</div>
+<!-- Nav Links (Desktop) -->
+<div class="hidden md:flex gap-8">
+<a class="text-on-surface-variant font-body-md text-body-md hover:text-primary-fixed hover:drop-shadow-[0_0_8px_rgba(0,219,233,0.5)] transition-all active:scale-95 duration-200" href="index.html">Ecosystem</a>
+<a class="text-on-surface-variant font-body-md text-body-md hover:text-primary-fixed hover:drop-shadow-[0_0_8px_rgba(0,219,233,0.5)] transition-all active:scale-95 duration-200" href="bridge.html">Bridge</a>
+<a class="text-on-surface-variant font-body-md text-body-md hover:text-primary-fixed hover:drop-shadow-[0_0_8px_rgba(0,219,233,0.5)] transition-all active:scale-95 duration-200" href="staking.html">Staking</a>
+<a class="text-primary-fixed-dim border-b-2 border-primary-fixed-dim pb-1 font-body-md text-body-md hover:text-primary-fixed hover:drop-shadow-[0_0_8px_rgba(0,219,233,0.5)] transition-all active:scale-95 duration-200" href="governance.html">Governance</a>
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-4">
+<button class="hidden md:flex items-center justify-center text-on-surface-variant hover:text-primary-fixed transition-colors">
+<span class="material-symbols-outlined">sensors</span>
+</button>
+<button class="hidden md:block bg-primary-fixed-dim text-surface px-6 py-2 rounded-DEFAULT font-label-mono text-label-mono font-bold hover:bg-primary-fixed neon-glow-cyan-hover transition-all duration-300">
+                    Connect Wallet
+                </button>
+<button class="md:hidden relative z-[110] text-on-surface p-2" id="hamburger-btn" aria-controls="mobile-menu" aria-expanded="false" aria-label="Toggle menu">
+<span class="material-symbols-outlined" id="hamburger-icon">menu</span>
+</button>
+</div>
+</div>
+<!-- Mobile Drawer Menu -->
+<div id="mobile-menu" class="hidden fixed inset-0 z-[999] w-full h-screen bg-surface flex flex-col p-6 overflow-y-auto gap-4 justify-center">
+<a class="text-on-surface-variant font-body-md text-headline-md py-2" href="index.html">Ecosystem</a>
+<a class="text-on-surface-variant font-body-md text-headline-md py-2" href="bridge.html">Bridge</a>
+<a class="text-on-surface-variant font-body-md text-headline-md py-2" href="staking.html">Staking</a>
+<a class="text-primary-fixed-dim font-body-md text-headline-md py-2" href="governance.html">Governance</a>
+<button class="mt-6 w-full bg-primary-fixed-dim text-surface px-6 py-3 rounded-DEFAULT font-label-mono text-label-mono font-bold hover:bg-primary-fixed transition-all duration-300">Connect Wallet</button>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-grow z-10 pt-32 pb-24 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto w-full overflow-x-hidden">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
+<div>
+<h1 class="font-display-lg text-display-lg tracking-tighter mb-2" data-typewriter-wrap>
+<span class="typewriter-text gradient-text-cyan" data-typewriter="Decentralized Governance"></span><span class="typewriter-cursor" aria-hidden="true"></span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+                    Participate in the future of Neural Chain. Propose, debate, and vote on network upgrades, parameter changes, and treasury allocations.
+                </p>
+</div>
+<button class="bg-transparent border border-primary-fixed-dim text-primary-fixed-dim px-6 py-3 rounded-DEFAULT font-label-mono text-label-mono uppercase tracking-widest hover:bg-primary-fixed-dim/10 neon-glow-cyan-hover transition-all duration-300 flex items-center gap-2">
+<span class="material-symbols-outlined">add</span>
+                Submit Proposal
+            </button>
+</div>
+<!-- KPI Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter mb-16">
+<!-- Stat 1 -->
+<div class="glass-panel rounded-lg p-6 flex flex-col relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary-fixed/5 rounded-full blur-2xl -mr-16 -mt-16 group-hover:bg-primary-fixed/10 transition-all"></div>
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-2">Total Staked (Voting Power)</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg text-primary-fixed-dim js-counter">145.2M</span>
+<span class="font-label-mono text-label-mono text-on-surface-variant">NEURAL</span>
+</div>
+</div>
+<!-- Stat 2 -->
+<div class="glass-panel rounded-lg p-6 flex flex-col relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-tertiary-fixed/5 rounded-full blur-2xl -mr-16 -mt-16 group-hover:bg-tertiary-fixed/10 transition-all"></div>
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-2">Active Proposals</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg text-on-surface js-counter">3</span>
+<span class="font-label-mono text-label-mono text-on-surface-variant">Live</span>
+</div>
+</div>
+<!-- Stat 3 -->
+<div class="glass-panel rounded-lg p-6 flex flex-col relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-secondary-fixed/5 rounded-full blur-2xl -mr-16 -mt-16 group-hover:bg-secondary-fixed/10 transition-all"></div>
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-2">DAO Treasury</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg text-on-surface js-counter">$42.8M</span>
+<span class="font-label-mono text-label-mono text-on-surface-variant">USD Eq.</span>
+</div>
+</div>
+</div>
+<!-- Proposals Section -->
+<div class="space-y-6">
+<h2 class="font-headline-md text-headline-md mb-6 border-b border-outline-variant/30 pb-4">Recent Proposals</h2>
+<!-- Proposal Card: Active -->
+<div class="glass-panel rounded-lg p-6 md:p-8 hover:border-primary-fixed-dim/50 transition-all duration-300">
+<div class="flex flex-col md:flex-row justify-between gap-6">
+<!-- Details -->
+<div class="flex-grow">
+<div class="flex items-center gap-3 mb-3">
+<span class="font-label-mono text-label-mono text-on-surface-variant bg-surface-container-high px-2 py-1 rounded-sm border border-outline-variant/50">NIP-42</span>
+<div class="flex items-center gap-1.5 bg-primary-fixed/10 border border-primary-fixed/20 px-2 py-1 rounded-sm">
+<span class="w-2 h-2 rounded-full bg-primary-fixed animate-pulse neon-glow-cyan"></span>
+<span class="font-label-mono text-label-mono text-primary-fixed">Active</span>
+</div>
+</div>
+<h3 class="font-headline-md text-headline-md mb-2">Upgrade Consensus Mechanism to DPoS v2</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4 line-clamp-2">
+                            Proposal to implement the second version of our Delegated Proof of Stake consensus, introducing dynamic slashing penalties and optimized validator rotation schedules to increase network throughput by 15%.
+                        </p>
+</div>
+<!-- Voting Stats -->
+<div class="w-full lg:w-64 flex flex-col justify-center">
+<div class="mb-4">
+<div class="flex justify-between font-label-mono text-label-mono mb-1">
+<span class="text-on-surface">For</span>
+<span class="text-primary-fixed-dim">78%</span>
+</div>
+<div class="w-full h-2 bg-surface-container-high rounded-full overflow-hidden flex">
+<div class="h-full bg-primary-fixed-dim neon-glow-cyan js-progress-bar" data-width="78%" style="width: 0%"></div>
+</div>
+</div>
+<div class="mb-4">
+<div class="flex justify-between font-label-mono text-label-mono mb-1">
+<span class="text-on-surface">Against</span>
+<span class="text-error">22%</span>
+</div>
+<div class="w-full h-2 bg-surface-container-high rounded-full overflow-hidden flex">
+<div class="h-full bg-error js-progress-bar" data-width="22%" style="width: 0%"></div>
+</div>
+</div>
+<div class="flex items-center justify-between mt-2 pt-4 border-t border-outline-variant/30">
+<span class="font-label-mono text-label-mono text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+                                2d 14h left
+                            </span>
+<button class="text-primary-fixed-dim font-label-mono text-label-mono hover:text-primary-fixed transition-colors">Vote Now</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Proposal Card: Passed -->
+<div class="glass-panel rounded-lg p-6 md:p-8 opacity-80">
+<div class="flex flex-col md:flex-row justify-between gap-6">
+<!-- Details -->
+<div class="flex-grow">
+<div class="flex items-center gap-3 mb-3">
+<span class="font-label-mono text-label-mono text-on-surface-variant bg-surface-container-high px-2 py-1 rounded-sm border border-outline-variant/50">NIP-41</span>
+<div class="flex items-center gap-1.5 bg-tertiary-fixed/10 border border-tertiary-fixed/20 px-2 py-1 rounded-sm">
+<span class="material-symbols-outlined text-[14px] text-tertiary-fixed-dim">check_circle</span>
+<span class="font-label-mono text-label-mono text-tertiary-fixed-dim">Passed</span>
+</div>
+</div>
+<h3 class="font-headline-md text-headline-md mb-2">Allocate 5M NEURAL to Developer Grant Fund</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4 line-clamp-2">
+                            A proposal to bootstrap the ecosystem by allocating funds from the DAO treasury to a new multi-sig wallet dedicated to funding high-impact dApp development on the Neural Chain.
+                        </p>
+</div>
+<!-- Voting Stats -->
+<div class="w-full lg:w-64 flex flex-col justify-center">
+<div class="mb-4">
+<div class="flex justify-between font-label-mono text-label-mono mb-1">
+<span class="text-on-surface">For</span>
+<span class="text-on-surface-variant">92%</span>
+</div>
+<div class="w-full h-1 bg-surface-container-high rounded-full overflow-hidden flex">
+<div class="h-full bg-tertiary-fixed-dim js-progress-bar" data-width="92%" style="width: 0%"></div>
+</div>
+</div>
+<div class="mb-4">
+<div class="flex justify-between font-label-mono text-label-mono mb-1">
+<span class="text-on-surface">Against</span>
+<span class="text-on-surface-variant">8%</span>
+</div>
+<div class="w-full h-1 bg-surface-container-high rounded-full overflow-hidden flex">
+<div class="h-full bg-surface-variant js-progress-bar" data-width="8%" style="width: 0%"></div>
+</div>
+</div>
+<div class="flex items-center justify-between mt-2 pt-4 border-t border-outline-variant/30">
+<span class="font-label-mono text-label-mono text-on-surface-variant">Executed</span>
+<button class="text-on-surface-variant font-label-mono text-label-mono hover:text-on-surface transition-colors">Details</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="z-10 bg-surface-container-lowest w-full py-16 border-t border-outline-variant/30">
+<div class="w-full grid grid-cols-1 md:grid-cols-4 gap-gutter max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="col-span-1 md:col-span-1">
+<span class="font-display-lg-mobile text-2xl md:text-3xl font-bold tracking-widest text-surface-tint">NEURAL CHAIN</span>
+<p class="font-label-mono text-label-mono text-surface-tint">
+                    © 2024 Neural Chain. Secured by Zero-Knowledge.
+                </p>
+</div>
+<div class="flex flex-col gap-4">
+<span class="font-label-caps text-label-caps text-on-surface mb-2">Resources</span>
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:text-tertiary-fixed transition-colors duration-300" href="#">Documentation</a>
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:text-tertiary-fixed transition-colors duration-300" href="#">Security Audits</a>
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:text-tertiary-fixed transition-colors duration-300" href="#">Whitepaper</a>
+</div>
+<div class="flex flex-col gap-4">
+<span class="font-label-caps text-label-caps text-on-surface mb-2">Community</span>
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:text-tertiary-fixed transition-colors duration-300" href="#">Github</a>
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:text-tertiary-fixed transition-colors duration-300" href="#">Discord</a>
+</div>
+<div class="flex flex-col gap-4">
+<span class="font-label-caps text-label-caps text-on-surface mb-2">Network</span>
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:text-tertiary-fixed transition-colors duration-300" href="#">Status</a>
+</div>
+</div>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
+<script src="https://unpkg.com/split-type"></script>
+<script src="js/animations.js"></script>
+</body></html>

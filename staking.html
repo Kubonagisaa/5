@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NEURAL CHAIN - Staking Dashboard</title>
+<!-- Google Fonts: Space Grotesk (Display/Headline), Inter (Body), Geist (Label/Mono) -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@500;700&amp;family=Inter:wght@400;500&amp;family=Space+Grotesk:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS with custom config -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="js/tailwind-config.js"></script>
+<link rel="stylesheet" href="css/staking.css"/>
+<link rel="stylesheet" href="css/cursor.css"/>
+</head>
+<body class="bg-surface text-on-surface min-h-screen antialiased overflow-x-hidden relative" style="opacity:0;">
+<script>setTimeout(function(){document.body.style.opacity="1";},1500);</script>
+<div class="cursor-dot" id="cursor-dot"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<!-- Atmospheric Background -->
+<div class="fixed inset-0 pointer-events-none z-[-1] bg-grid-pattern"></div>
+<div class="fixed top-[-10%] right-[-10%] w-48 h-48 md:w-[60vw] md:h-[60vw] rounded-full bg-surface-tint/5 blur-[60px] md:blur-[120px] pointer-events-none z-[-1]"></div>
+<div class="fixed bottom-[-10%] left-[-10%] w-36 h-36 md:w-[40vw] md:h-[40vw] rounded-full bg-secondary-container/5 blur-[50px] md:blur-[100px] pointer-events-none z-[-1]"></div>
+<!-- TopNavBar (Shared Component) -->
+<header class="bg-surface/10 dark:bg-surface/10 backdrop-blur-xl font-body-md text-body-md fixed top-0 w-full z-50 border-b border-outline-variant/20 shadow-[0_0_20px_rgba(0,219,233,0.15)]">
+<div class="flex justify-between items-center max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop h-20">
+<!-- Brand -->
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-surface-tint" data-icon="sensors" data-weight="fill" style="font-variation-settings: 'FILL' 1;">sensors</span>
+<span class="font-display-lg-mobile text-2xl md:text-3xl font-bold tracking-widest text-surface-tint">NEURAL CHAIN</span>
+</div>
+<!-- Nav Links (Desktop) -->
+<nav class="hidden md:flex items-center gap-8 h-full">
+<a class="text-on-surface-variant hover:text-primary-fixed hover:drop-shadow-[0_0_8px_rgba(0,219,233,0.5)] transition-all active:scale-95 duration-200 flex items-center h-full" href="index.html">Ecosystem</a>
+<a class="text-on-surface-variant hover:text-primary-fixed hover:drop-shadow-[0_0_8px_rgba(0,219,233,0.5)] transition-all active:scale-95 duration-200 flex items-center h-full" href="bridge.html">Bridge</a>
+<a class="text-primary-fixed-dim border-b-2 border-primary-fixed-dim pb-1 hover:text-primary-fixed hover:drop-shadow-[0_0_8px_rgba(0,219,233,0.5)] transition-all active:scale-95 duration-200 flex items-center h-full pt-1" href="staking.html">Staking</a>
+<a class="text-on-surface-variant hover:text-primary-fixed hover:drop-shadow-[0_0_8px_rgba(0,219,233,0.5)] transition-all active:scale-95 duration-200 flex items-center h-full" href="governance.html">Governance</a>
+</nav>
+<!-- Trailing Action -->
+<div class="flex items-center gap-4">
+<button class="hidden md:flex border border-surface-tint/50 text-surface-tint hover:bg-surface-tint hover:text-surface hover:shadow-[0_0_15px_rgba(0,219,233,0.4)] transition-all duration-300 font-label-caps text-label-caps py-2 px-4 rounded">
+                    Connect Wallet
+                </button>
+<button class="md:hidden relative z-[110] text-on-surface-variant p-2" id="hamburger-btn" aria-controls="mobile-menu" aria-expanded="false" aria-label="Toggle menu">
+<span class="material-symbols-outlined" data-icon="menu" id="hamburger-icon">menu</span>
+</button>
+</div>
+</div>
+<!-- Mobile Drawer Menu -->
+<div id="mobile-menu" class="hidden fixed inset-0 z-[999] w-full h-screen bg-surface flex flex-col p-6 overflow-y-auto gap-4 justify-center">
+<a class="text-on-surface-variant font-body-md text-headline-md py-2" href="index.html">Ecosystem</a>
+<a class="text-on-surface-variant font-body-md text-headline-md py-2" href="bridge.html">Bridge</a>
+<a class="text-primary-fixed-dim font-body-md text-headline-md py-2" href="staking.html">Staking</a>
+<a class="text-on-surface-variant font-body-md text-headline-md py-2" href="governance.html">Governance</a>
+<button class="mt-6 w-full border border-surface-tint/50 text-surface-tint hover:bg-surface-tint hover:text-surface transition-all duration-300 font-label-caps text-label-caps py-3 px-4 rounded">Connect Wallet</button>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="pt-[120px] pb-24 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto space-y-[64px] overflow-x-hidden">
+<!-- Decorative Top Hero Image -->
+<div class="relative w-full h-[200px] rounded-xl overflow-hidden glass-card">
+<div class="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-screen" data-alt="A macro shot of glowing cyan fiber optic cables interlaced within a dark obsidian geometric structure. The lighting is low-key with intense neon cyan highlights, conveying a mood of hyper-advanced cryptographic processing and high-velocity data flow. A cyberpunk minimalist aesthetic prioritizing depth and precision." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCdMjREXa6nUa6ckxaRkgTLkmPeUtRjwubv6cIxTnL4Dsh6BhgBSaZScWd1_KNCQ8041Eb0QsHTmXu1leXmYFNubuM5p2WTAWBM3R_myPNW617SLtGNHomm3JhuK0qkulIRFCFS580rOr3u-PfG1mNhIRSoLcy-Z7PprcvCD6CInG18gbIaaf7HzpmI3xKfxfLOw_jtZiFiIqJsQkgXi-EjxV1RExOwabEh04Da83CClgD14153CqF1sex1yNJGCw8tTXhwioIlMXd7')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent"></div>
+<div class="absolute bottom-6 left-6 md:left-8">
+<h1 class="font-display-lg-mobile text-display-lg-mobile md:font-display-lg md:text-display-lg text-on-surface tracking-tighter" data-typewriter-wrap><span class="typewriter-text" data-typewriter="Staking Protocol"></span><span class="typewriter-cursor" aria-hidden="true"></span></h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2 max-w-lg">Secure the Neural Network. Stake your tokens to validate transactions and earn algorithmic yields.</p>
+</div>
+</div>
+<!-- Global Protocol Stats -->
+<section class="grid grid-cols-2 md:grid-cols-4 gap-gutter">
+<div class="glass-card p-6 rounded-xl relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-[2px] h-full bg-gradient-to-b from-surface-tint to-transparent opacity-50"></div>
+<div class="font-label-mono text-label-mono text-on-surface-variant mb-1 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-surface-tint" data-icon="database">database</span> TVL
+                </div>
+<div class="font-headline-lg text-headline-lg text-on-surface js-counter">$4.28B</div>
+<div class="font-label-caps text-label-caps text-tertiary-fixed-dim mt-2 flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed-dim animate-pulse"></span> +2.4% 24h
+                </div>
+</div>
+<div class="glass-card p-6 rounded-xl relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-[2px] h-full bg-gradient-to-b from-secondary-container to-transparent opacity-50"></div>
+<div class="font-label-mono text-label-mono text-on-surface-variant mb-1 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-secondary-container" data-icon="bolt">bolt</span> Network APR
+                </div>
+<div class="font-headline-lg text-headline-lg text-on-surface js-counter">12.8%</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant mt-2">Dynamic Rate</div>
+</div>
+<div class="glass-card p-6 rounded-xl relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-[2px] h-full bg-gradient-to-b from-outline to-transparent opacity-50"></div>
+<div class="font-label-mono text-label-mono text-on-surface-variant mb-1 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-outline" data-icon="deployed_code">deployed_code</span> Active Nodes
+                </div>
+<div class="font-headline-lg text-headline-lg text-on-surface js-counter">1,402</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant mt-2">Global Distribution</div>
+</div>
+<div class="glass-card p-6 rounded-xl relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-[2px] h-full bg-gradient-to-b from-tertiary-container to-transparent opacity-50"></div>
+<div class="font-label-mono text-label-mono text-on-surface-variant mb-1 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-tertiary-container" data-icon="schedule">schedule</span> Next Epoch
+                </div>
+<div class="font-headline-lg text-headline-lg text-on-surface">04:12:55</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant mt-2">Block #884920</div>
+</div>
+</section>
+<!-- Main Dashboard Bento Grid -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Staking Interface (Left Col) -->
+<div class="lg:col-span-5 glass-card p-6 md:p-8 rounded-[24px] flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-8">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Stake NEURAL</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Delegate to secure the chain.</p>
+</div>
+<div class="bg-surface-variant/30 px-3 py-1.5 rounded flex items-center gap-2 border border-outline-variant/30">
+<span class="material-symbols-outlined text-[18px] text-surface-tint" data-icon="wallet">wallet</span>
+<span class="font-label-mono text-label-mono text-on-surface">Connected</span>
+</div>
+</div>
+<!-- Input Module -->
+<div class="space-y-4">
+<div class="flex justify-between items-center font-label-mono text-label-mono text-on-surface-variant">
+<span>Amount</span>
+<span>Balance: 14,500.00 NRL</span>
+</div>
+<div class="relative group">
+<input class="w-full bg-surface-variant/10 border-0 border-b border-outline-variant text-on-surface focus:ring-0 focus:border-surface-tint focus:shadow-[0_1px_15px_rgba(0,219,233,0.3)] transition-all font-display-lg-mobile text-display-lg-mobile py-4 pl-4 pr-24 outline-none placeholder:text-outline-variant/50" placeholder="0.00" type="text"/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 font-label-caps text-label-caps text-surface-tint bg-surface-tint/10 hover:bg-surface-tint/20 px-3 py-1.5 rounded transition-colors">MAX</button>
+</div>
+<div class="flex justify-between font-label-mono text-label-mono text-on-surface-variant pt-2">
+<span>Expected Output</span>
+<span class="text-primary-fixed-dim">≈ ~0.00 sNRL</span>
+</div>
+</div>
+</div>
+<div class="mt-12 space-y-4">
+<button class="w-full bg-surface-tint text-surface font-label-caps text-label-caps py-4 rounded-lg neon-glow transition-all active:scale-[0.98] tracking-widest">
+                        INITIATE STAKE
+                    </button>
+<p class="font-label-mono text-label-mono text-center text-outline text-[12px]">Unbonding period is 14 days.</p>
+</div>
+</div>
+<!-- Stats & Rewards (Right Col) -->
+<div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-gutter">
+<!-- Your Staked Balance -->
+<div class="glass-card p-6 rounded-xl flex flex-col justify-between group hover:border-surface-tint/30 transition-colors">
+<div>
+<div class="w-10 h-10 rounded bg-surface-variant/30 flex items-center justify-center mb-4 border border-outline-variant/30">
+<span class="material-symbols-outlined text-surface-tint" data-icon="lock">lock</span>
+</div>
+<h3 class="font-label-mono text-label-mono text-on-surface-variant">Active Delegation</h3>
+<div class="font-headline-lg text-headline-lg text-on-surface mt-2">2,500.00</div>
+<div class="font-label-mono text-label-mono text-outline mt-1">sNRL</div>
+</div>
+<div class="mt-8 pt-4 border-t border-outline-variant/20 flex justify-between items-center">
+<span class="font-label-mono text-label-mono text-on-surface-variant">Est. Daily Yield</span>
+<span class="font-label-caps text-label-caps text-tertiary-fixed-dim">+1.2 NRL</span>
+</div>
+</div>
+<!-- Reward Claim Module -->
+<div class="glass-card p-6 rounded-xl relative overflow-hidden flex flex-col justify-between shadow-[0_0_30px_rgba(207,92,255,0.05)] border-secondary-container/20">
+<div class="absolute -right-10 -top-10 w-32 h-32 bg-secondary-container/10 rounded-full blur-2xl pointer-events-none"></div>
+<div>
+<h3 class="font-label-mono text-label-mono text-on-surface-variant">Pending Rewards</h3>
+<div class="font-headline-lg text-headline-lg text-secondary-fixed mt-2">45.28</div>
+<div class="font-label-mono text-label-mono text-secondary mt-1">NRL ($184.20)</div>
+</div>
+<button class="mt-8 w-full border border-secondary-container text-secondary-container hover:bg-secondary-container/10 font-label-caps text-label-caps py-3 rounded-lg transition-all active:scale-[0.98] shadow-[0_0_10px_rgba(207,92,255,0.2)]">
+                        CLAIM REWARDS
+                    </button>
+</div>
+<!-- Epoch Progression -->
+<div class="sm:col-span-2 glass-card p-6 rounded-xl flex items-center justify-between">
+<div class="flex items-center gap-4">
+<svg class="animate-spin w-12 h-12 flex-shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="12" cy="12" r="10" class="stroke-surface-variant" stroke-width="3"></circle>
+<path d="M22 12A10 10 0 0 0 12 2" class="stroke-surface-tint" stroke-width="3" stroke-linecap="round"></path>
+</svg>
+<div>
+<h3 class="font-label-mono text-label-mono text-on-surface">Epoch #142 Progression</h3>
+<p class="font-label-caps text-label-caps text-outline mt-1">68% Completed</p>
+</div>
+</div>
+<div class="flex-1 max-w-xs mx-8 hidden md:block">
+<div class="w-full h-2 bg-surface-variant/50 rounded-full overflow-hidden flex">
+<div class="h-full bg-surface-tint/80 js-progress-bar" data-width="68%" style="width: 0%"></div>
+</div>
+</div>
+<div class="text-right">
+<div class="font-label-mono text-label-mono text-surface-tint">Syncing</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Validator Pools List -->
+<section class="space-y-6">
+<h2 class="font-headline-md text-headline-md text-on-surface px-2">Ecosystem Validators</h2>
+<div class="space-y-2">
+<!-- Header Row (Hidden on mobile) -->
+<div class="hidden md:grid grid-cols-12 gap-4 px-6 py-2 font-label-caps text-label-caps text-outline-variant">
+<div class="col-span-4">Validator Node</div>
+<div class="col-span-2 text-right">Commission</div>
+<div class="col-span-2 text-right">APR</div>
+<div class="col-span-2 text-right">Total Staked</div>
+<div class="col-span-2"></div>
+</div>
+<!-- Pool Row 1 -->
+<div class="glass-card px-6 py-4 rounded-lg flex flex-col md:grid md:grid-cols-12 gap-4 items-start md:items-center hover:bg-surface-variant/20 transition-colors">
+<div class="col-span-4 flex items-center gap-3">
+<img class="w-8 h-8 rounded bg-surface-variant/50 object-cover" data-alt="A minimalist, geometric logo design for a node validator, featuring interlocking sharp triangles in a vibrant cyan hue against a pure obsidian dark background. The logo appears illuminated and high-tech." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZpn-B4eGCCVfRACVwVMb3mrb3BhBA-I-PH-JVesqsfRLvOtH2LEjloz2b3jfOVlINpgYHxqNCqpfkNODY59yznDA_Tb-rpjlCoRQatyPvR4uvnr9Dytm6GQfDqoHVucFtSmhTmVnfFQtFqnal0pbOr1gH_PSoOjaei45_TIn1H3bfYZ9eT696l3i_mh8Fe_xjmOjlGyXHfitmEzRZwWKQsg7P3lI3D6-cev7qSMsT3DQu_byD1MFF-yxIawYqcINaUN4ajfm_YAws"/>
+<div>
+<div class="font-label-mono text-label-mono text-on-surface">Neural Nexus Core</div>
+<div class="font-label-caps text-label-caps text-tertiary-fixed-dim mt-1 flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed-dim"></span> Active
+                            </div>
+</div>
+</div>
+<div class="col-span-2 md:text-right font-label-mono text-label-mono text-on-surface-variant w-full flex justify-between md:block"><span class="md:hidden">Commission:</span> 5%</div>
+<div class="col-span-2 md:text-right font-label-mono text-label-mono text-surface-tint w-full flex justify-between md:block"><span class="md:hidden">APR:</span> 12.8%</div>
+<div class="col-span-2 md:text-right font-label-mono text-label-mono text-on-surface w-full flex justify-between md:block"><span class="md:hidden">Staked:</span> 1.2M NRL</div>
+<div class="col-span-2 flex justify-end w-full mt-4 md:mt-0">
+<button class="bg-surface-variant/30 border border-outline-variant hover:border-surface-tint hover:text-surface-tint text-on-surface font-label-caps text-label-caps py-2 px-4 rounded transition-all">Manage</button>
+</div>
+</div>
+<!-- Pool Row 2 -->
+<div class="glass-card px-6 py-4 rounded-lg flex flex-col md:grid md:grid-cols-12 gap-4 items-start md:items-center hover:bg-surface-variant/20 transition-colors">
+<div class="col-span-4 flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-secondary-container/10 border border-secondary-container/30 flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px] text-secondary-container" data-icon="hub">hub</span>
+</div>
+<div>
+<div class="font-label-mono text-label-mono text-on-surface">Zero-K Sentinel</div>
+<div class="font-label-caps text-label-caps text-tertiary-fixed-dim mt-1 flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed-dim"></span> Active
+                            </div>
+</div>
+</div>
+<div class="col-span-2 md:text-right font-label-mono text-label-mono text-on-surface-variant w-full flex justify-between md:block"><span class="md:hidden">Commission:</span> 8%</div>
+<div class="col-span-2 md:text-right font-label-mono text-label-mono text-surface-tint w-full flex justify-between md:block"><span class="md:hidden">APR:</span> 13.1%</div>
+<div class="col-span-2 md:text-right font-label-mono text-label-mono text-on-surface w-full flex justify-between md:block"><span class="md:hidden">Staked:</span> 840K NRL</div>
+<div class="col-span-2 flex justify-end w-full mt-4 md:mt-0">
+<button class="bg-surface-variant/30 border border-outline-variant hover:border-surface-tint hover:text-surface-tint text-on-surface font-label-caps text-label-caps py-2 px-4 rounded transition-all">Manage</button>
+</div>
+</div>
+<!-- Pool Row 3 (Full/Disabled) -->
+<div class="glass-card px-6 py-4 rounded-lg flex flex-col md:grid md:grid-cols-12 gap-4 items-start md:items-center opacity-60">
+<div class="col-span-4 flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px] text-outline" data-icon="block">block</span>
+</div>
+<div>
+<div class="font-label-mono text-label-mono text-on-surface">Genesis Node Alpha</div>
+<div class="font-label-caps text-label-caps text-outline mt-1 flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span> Saturated
+                            </div>
+</div>
+</div>
+<div class="col-span-2 md:text-right font-label-mono text-label-mono text-on-surface-variant w-full flex justify-between md:block"><span class="md:hidden">Commission:</span> 2%</div>
+<div class="col-span-2 md:text-right font-label-mono text-label-mono text-outline w-full flex justify-between md:block"><span class="md:hidden">APR:</span> 11.5%</div>
+<div class="col-span-2 md:text-right font-label-mono text-label-mono text-outline w-full flex justify-between md:block"><span class="md:hidden">Staked:</span> 5.0M NRL</div>
+<div class="col-span-2 flex justify-end w-full mt-4 md:mt-0">
+<button class="bg-surface/50 border border-outline-variant/30 text-outline-variant font-label-caps text-label-caps py-2 px-4 rounded cursor-not-allowed">Full</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer (Shared Component) -->
+<footer class="bg-surface-container-lowest font-label-mono text-label-mono text-on-surface-variant w-full py-16 border-t border-outline-variant/30 transition-all duration-300">
+<div class="w-full grid grid-cols-1 md:grid-cols-4 gap-gutter max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="col-span-1 md:col-span-4 flex flex-col md:flex-row justify-between items-start md:items-end gap-4 border-b border-outline-variant/20 pb-8 mb-8">
+<span class="font-display-lg-mobile text-2xl md:text-3xl font-bold tracking-widest text-surface-tint">NEURAL CHAIN</span>
+<p class="text-surface-tint">© 2024 Neural Chain. Secured by Zero-Knowledge.</p>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="font-label-caps text-label-caps text-on-surface">Resources</h4>
+<a class="hover:text-tertiary-fixed transition-colors" href="#">Documentation</a>
+<a class="hover:text-tertiary-fixed transition-colors" href="#">Whitepaper</a>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="font-label-caps text-label-caps text-on-surface">Ecosystem</h4>
+<a class="hover:text-tertiary-fixed transition-colors" href="#">Security Audits</a>
+<a class="hover:text-tertiary-fixed transition-colors" href="#">Status</a>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="font-label-caps text-label-caps text-on-surface">Community</h4>
+<a class="hover:text-tertiary-fixed transition-colors" href="#">Github</a>
+<a class="hover:text-tertiary-fixed transition-colors" href="#">Discord</a>
+</div>
+<div class="flex flex-col gap-4 justify-end items-start md:items-end">
+<!-- Abstract glowing element for footer balance -->
+<div class="w-16 h-16 rounded-full bg-[radial-gradient(circle,_var(--tw-gradient-stops))] from-surface-tint/20 to-transparent blur-md"></div>
+</div>
+</div>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
+<script src="https://unpkg.com/split-type"></script>
+<script src="js/animations.js"></script>
+</body></html>

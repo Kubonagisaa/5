@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NEURAL CHAIN - The Future of Decentralized Intelligence</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&amp;family=Inter:wght@400;500;600&amp;family=Geist:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="js/tailwind-config.js"></script>
+<link rel="stylesheet" href="css/landing.css"/>
+<link rel="stylesheet" href="css/cursor.css"/>
+</head>
+<body class="bg-background text-on-surface min-h-screen font-body-md selection:bg-surface-tint selection:text-on-primary-fixed overflow-x-hidden" style="opacity:0;">
+<script>setTimeout(function(){document.body.style.opacity="1";},1500);</script>
+<div class="cursor-dot" id="cursor-dot"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<!-- TopNavBar (Shared Component) -->
+<header class="fixed top-0 w-full z-50 bg-surface/10 dark:bg-surface/10 backdrop-blur-xl border-b border-outline-variant/20 shadow-[0_0_20px_rgba(0,219,233,0.15)]">
+<div class="flex justify-between items-center max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop h-20">
+<!-- Brand -->
+<div class="font-display-lg-mobile text-2xl md:text-3xl font-bold tracking-widest text-surface-tint">NEURAL CHAIN</div>
+<!-- Navigation Links (Web) -->
+<nav class="hidden md:flex gap-gutter items-center h-full">
+<a class="font-body-md text-body-md text-primary-fixed-dim border-b-2 border-primary-fixed-dim pb-1 active:scale-95 duration-200" href="index.html">Ecosystem</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary-fixed hover:drop-shadow-[0_0_8px_rgba(0,219,233,0.5)] transition-all active:scale-95 duration-200" href="bridge.html">Bridge</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary-fixed hover:drop-shadow-[0_0_8px_rgba(0,219,233,0.5)] transition-all active:scale-95 duration-200" href="staking.html">Staking</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary-fixed hover:drop-shadow-[0_0_8px_rgba(0,219,233,0.5)] transition-all active:scale-95 duration-200" href="governance.html">Governance</a>
+</nav>
+<!-- Actions -->
+<div class="flex items-center gap-4">
+<button class="hidden md:flex items-center gap-2 bg-surface-tint text-on-primary-fixed px-6 py-2 rounded font-label-mono text-label-mono neon-halo neon-halo-hover transition-all duration-300">
+<span>Connect Wallet</span>
+<span class="material-symbols-outlined text-[18px]">sensors</span>
+</button>
+<button class="md:hidden relative z-[110] text-on-surface p-2" id="hamburger-btn" aria-controls="mobile-menu" aria-expanded="false" aria-label="Toggle menu">
+<span class="material-symbols-outlined" id="hamburger-icon">menu</span>
+</button>
+</div>
+</div>
+<!-- Mobile Drawer Menu -->
+<div id="mobile-menu" class="hidden fixed inset-0 z-[999] w-full h-screen bg-surface flex flex-col p-6 overflow-y-auto gap-4 justify-center">
+<a class="font-body-md text-headline-md text-primary-fixed-dim py-2" href="index.html">Ecosystem</a>
+<a class="font-body-md text-headline-md text-on-surface-variant py-2" href="bridge.html">Bridge</a>
+<a class="font-body-md text-headline-md text-on-surface-variant py-2" href="staking.html">Staking</a>
+<a class="font-body-md text-headline-md text-on-surface-variant py-2" href="governance.html">Governance</a>
+<button class="mt-6 w-full flex items-center justify-center gap-2 bg-surface-tint text-on-primary-fixed px-6 py-3 rounded font-label-mono text-label-mono neon-halo transition-all duration-300">
+<span>Connect Wallet</span>
+<span class="material-symbols-outlined text-[18px]">sensors</span>
+</button>
+</div>
+</header>
+<main class="pt-20 overflow-x-hidden">
+<!-- Hero Section -->
+<section class="relative min-h-screen md:min-h-[921px] flex items-center justify-center overflow-hidden py-24 px-margin-mobile md:px-margin-desktop">
+<!-- Background Graphic -->
+<div class="absolute inset-0 z-0 opacity-40">
+<div class="bg-cover bg-center w-full h-full" data-alt="A highly detailed 3D abstract orbital visualization representing a futuristic blockchain network. Glowing cyan and neon green data streams orbit a central, deep obsidian core. The style is cyberpunk minimalism with glassmorphism effects, set against a dark void. Volumetric lighting and soft glows emphasize high-tech precision." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB8uuhMOmEbvxBC_1wJo0dfjztikeDj7iUwz_x3q_foqmN-NYKPr31-6uHo1CN4HOy5knfj7k3MyituUdhMUkoNqxHBTmY0bcOXz1jcRpmdw0SzORaW1BYPT2Gly-QT7luzwMbjaphNzbeNzIIwLgo4FSOoZ5s7KMp_oLBwC2RMCPldDhNq9u6WxgaXGofpHYNNBKL3SSMmEXx47H3I0icMjxuxfS16tyvnb26YbE3Rs2Jdr4sFTXa_OUzqqcG6kIp0c7ayHA_0Moie')"></div>
+<div class="absolute inset-0 bg-gradient-to-b from-background/40 via-background/80 to-background"></div>
+</div>
+<div class="relative z-10 max-w-container-max mx-auto w-full flex flex-col items-center text-center gap-8">
+<div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-surface-tint/30 bg-surface-tint/5 backdrop-blur-md">
+<span class="w-2 h-2 rounded-full bg-surface-tint shadow-[0_0_8px_#00dbe9] animate-pulse"></span>
+<span class="font-label-mono text-label-mono text-surface-tint">Mainnet Beta Live</span>
+</div>
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg max-w-4xl" data-typewriter-wrap>
+<span class="typewriter-text bg-clip-text text-transparent bg-gradient-to-r from-on-surface via-primary to-surface-tint" data-typewriter="The Future of Decentralized Intelligence"></span><span class="typewriter-cursor" aria-hidden="true"></span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+                    A highly scalable, cryptographically secure infrastructure engineered for the next generation of Web3 applications. Powered by zero-knowledge proofs and adaptive consensus.
+                </p>
+<div class="flex flex-col sm:flex-row gap-4 mt-4 w-full sm:w-auto">
+<button class="bg-surface-tint text-on-primary-fixed px-8 py-3 rounded font-label-mono text-label-mono neon-halo neon-halo-hover transition-all duration-300 w-full sm:w-auto flex items-center justify-center gap-2">
+                        Explore Ecosystem
+                        <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+<button class="bg-transparent border border-surface-tint text-surface-tint px-8 py-3 rounded font-label-mono text-label-mono hover:bg-surface-tint/10 transition-all duration-300 w-full sm:w-auto flex items-center justify-center gap-2">
+                        Read Whitepaper
+                        <span class="material-symbols-outlined text-[18px]">description</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Network Stats -->
+<section class="relative z-20 -mt-12 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="glass-panel gradient-border-thin rounded-xl p-6 md:p-8 flex flex-col md:flex-row justify-around items-center gap-8 md:gap-4 divide-y md:divide-y-0 md:divide-x divide-outline-variant/30">
+<div class="flex flex-col items-center justify-center w-full pt-4 md:pt-0">
+<span class="font-label-mono text-label-mono text-on-surface-variant uppercase tracking-wider mb-2">Network TPS</span>
+<span class="font-headline-lg text-headline-lg text-primary-fixed js-counter">100K+</span>
+</div>
+<div class="flex flex-col items-center justify-center w-full pt-4 md:pt-0">
+<span class="font-label-mono text-label-mono text-on-surface-variant uppercase tracking-wider mb-2">Active Nodes</span>
+<span class="font-headline-lg text-headline-lg text-primary-fixed js-counter">5,400+</span>
+</div>
+<div class="flex flex-col items-center justify-center w-full pt-4 md:pt-0">
+<span class="font-label-mono text-label-mono text-on-surface-variant uppercase tracking-wider mb-2">Total Value Staked</span>
+<span class="font-headline-lg text-headline-lg text-primary-fixed js-counter">$2.4B</span>
+</div>
+</div>
+</section>
+<!-- Core Features -->
+<section class="py-24 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<div class="text-center mb-16">
+<h2 class="font-headline-lg text-headline-lg mb-4 text-on-surface">Architected for Scale</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">Built from the ground up to solve the blockchain trilemma without compromising on decentralization.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Card 1 -->
+<div class="glass-panel gradient-border-thin rounded-xl p-8 hover:bg-surface/30 transition-colors duration-300 group">
+<div class="w-12 h-12 rounded-lg bg-surface-tint/10 flex items-center justify-center mb-6 border border-surface-tint/20 group-hover:border-surface-tint/50 transition-colors">
+<span class="material-symbols-outlined text-surface-tint" style="font-variation-settings: 'FILL' 1;">security</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-3 text-on-surface">Zk-Rollups</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Cryptographic privacy meets unparalleled speed. Execute complex smart contracts off-chain with mathematical guarantees.</p>
+</div>
+<!-- Card 2 -->
+<div class="glass-panel gradient-border-thin rounded-xl p-8 hover:bg-surface/30 transition-colors duration-300 group">
+<div class="w-12 h-12 rounded-lg bg-tertiary-container/10 flex items-center justify-center mb-6 border border-tertiary-container/20 group-hover:border-tertiary-container/50 transition-colors">
+<span class="material-symbols-outlined text-tertiary-container" style="font-variation-settings: 'FILL' 1;">hub</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-3 text-on-surface">Cross-Chain Bridge</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Seamless interoperability. Move liquidity and state across major L1s with our trustless, decentralized messaging protocol.</p>
+</div>
+<!-- Card 3 -->
+<div class="glass-panel gradient-border-thin rounded-xl p-8 hover:bg-surface/30 transition-colors duration-300 group">
+<div class="w-12 h-12 rounded-lg bg-secondary-container/10 flex items-center justify-center mb-6 border border-secondary-container/20 group-hover:border-secondary-container/50 transition-colors">
+<span class="material-symbols-outlined text-secondary-container" style="font-variation-settings: 'FILL' 1;">sync_alt</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-3 text-on-surface">Adaptive Consensus</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Dynamic block times that adjust to network demand, ensuring finality under heavy load while maintaining energy efficiency.</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer (Shared Component) -->
+<footer class="bg-surface-container-lowest w-full py-16 border-t border-outline-variant/30 mt-12">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="col-span-1 md:col-span-1 flex flex-col gap-4">
+<span class="font-display-lg-mobile text-2xl md:text-3xl font-bold tracking-widest text-surface-tint">NEURAL CHAIN</span>
+<span class="font-label-mono text-label-mono text-surface-tint mt-auto">© 2024 Neural Chain. Secured by Zero-Knowledge.</span>
+</div>
+<div class="col-span-1 md:col-span-3 flex flex-wrap gap-x-8 gap-y-4 md:justify-end items-end">
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:text-tertiary-fixed transition-colors duration-300" href="#">Documentation</a>
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:text-tertiary-fixed transition-colors duration-300" href="#">Security Audits</a>
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:text-tertiary-fixed transition-colors duration-300" href="#">Whitepaper</a>
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:text-tertiary-fixed transition-colors duration-300" href="#">Github</a>
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:text-tertiary-fixed transition-colors duration-300" href="#">Discord</a>
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:text-tertiary-fixed transition-colors duration-300" href="#">Status</a>
+</div>
+</div>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
+<script src="https://unpkg.com/split-type"></script>
+<script src="js/animations.js"></script>
+</body></html>
