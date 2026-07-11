@@ -1,0 +1,33 @@
+        .neon-halo {
+            box-shadow: 0 0 15px rgba(0, 219, 233, 0.4);
+        }
+        .neon-halo-hover:hover {
+            box-shadow: 0 0 20px rgba(0, 219, 233, 0.6);
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .glass-panel-active {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+        }
+        .gradient-border-thin {
+            position: relative;
+        }
+        .gradient-border-thin::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border: 1px solid transparent;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.2), rgba(255,255,255,0.05)) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask-composite: exclude;
+            pointer-events: none;
+            border-radius: inherit;
+        }
+    

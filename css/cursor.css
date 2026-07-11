@@ -1,0 +1,130 @@
+/* ==========================================================================
+   NEURAL CHAIN — Custom Web3 Cursor (Desktop) & Touch Ripple (Mobile)
+   ========================================================================== */
+
+/* Ẩn con trỏ mặc định chỉ trên Desktop (>=768px) */
+@media (min-width: 768px) {
+    body,
+    a,
+    button {
+        cursor: none;
+    }
+}
+
+.cursor-dot,
+.cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    will-change: transform;
+    display: none;
+}
+
+.cursor-dot {
+    width: 8px;
+    height: 8px;
+    background: #00dbe9;
+    box-shadow: 0 0 8px 2px rgba(0, 219, 233, 0.85), 0 0 18px 6px rgba(0, 219, 233, 0.35);
+}
+
+.cursor-ring {
+    width: 32px;
+    height: 32px;
+    border: 1px solid rgba(0, 219, 233, 0.5);
+    background: rgba(0, 219, 233, 0.04);
+    transition: width 0.2s ease, height 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.cursor-ring.cursor-ring--active {
+    width: 44px;
+    height: 44px;
+    border-color: rgba(0, 219, 233, 0.9);
+    background: rgba(0, 219, 233, 0.08);
+}
+
+@media (min-width: 768px) {
+    .cursor-dot,
+    .cursor-ring {
+        display: block;
+    }
+}
+
+/* ==========================================================================
+   NEURAL CHAIN — Typewriter Heading Effect (h1 chính đầu mỗi trang)
+   ========================================================================== */
+
+/* Chống giật layout: khoá min-height bằng JS (inline style), đảm bảo hiển
+   dạng block ngay từ đầu để phép đo chiều cao chính xác trước khi gõ chữ */
+[data-typewriter-wrap] {
+    display: block;
+}
+
+.typewriter-text {
+    display: inline;
+    white-space: pre-wrap;
+}
+
+.typewriter-cursor {
+    display: inline-block;
+    width: 0.5ch;
+    margin-left: 2px;
+    color: #00dbe9;
+    text-shadow: 0 0 8px rgba(0, 219, 233, 0.9), 0 0 16px rgba(0, 219, 233, 0.5);
+    font-weight: 400;
+    opacity: 0;
+    transform: translateY(0.05em);
+}
+
+.typewriter-cursor::before {
+    content: "|";
+}
+
+.typewriter-cursor--blink {
+    animation: neural-cursor-blink 0.9s steps(1, end) infinite;
+}
+
+@keyframes neural-cursor-blink {
+    0%, 49% {
+        opacity: 1;
+    }
+    50%, 100% {
+        opacity: 0;
+    }
+}
+
+/* ==========================================================================
+   NEURAL CHAIN — Split Text Animation (SplitType, character-based)
+   ========================================================================== */
+
+.char {
+    display: inline-block;
+}
+
+/* Touch ripple — chỉ xuất hiện trên Mobile khi chạm */
+.touch-ripple {
+    position: fixed;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 219, 233, 0.85) 0%, rgba(0, 219, 233, 0) 72%);
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%) scale(0.4);
+    opacity: 1;
+    animation: neural-ripple-fade 0.5s ease-out forwards;
+}
+
+@keyframes neural-ripple-fade {
+    0% {
+        transform: translate(-50%, -50%) scale(0.3);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(4.5);
+        opacity: 0;
+    }
+}
